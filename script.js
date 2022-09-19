@@ -1,33 +1,62 @@
-let bird_speed = "";
-let bird = document.querySelector(".bird");
+import {updateBird, setUpBird, getBirdRect} from "./bird.js"
+
 let img = document.getElementById("bird-1");
-//sound effects
-let sound_point = new Audio("sounds effect/point.mp3");
-let sound_die = new Audio("sounds effect/die.mp3");
-
-//The getBoundingClientRect() method returns the size of an element and its position relative to the viewport.
-//  returns top, right, bottom, left, x, y, width and height
- 
-let bird_props = bird.getBoundingClientRect();
-console.log("bird", bird_props)
-
-let background = document.querySelector(".background").getBoundingClientRect();
-console.log("background", background)
 let score_val = document.querySelector(".score_val");
 let message = document.querySelector(".message");
+let subtitle = document.querySelector(".subtitle")
 let score_title = document.querySelector(".score_title");
 
-let game_state = "Start";
-img.style.display = "none";
 
-document.addEventListener("keypress",//call a function to start
-)
-    // img.style.display = "block";
-    // bird.style.top = "50vh";
-    // game_state = "Play";
-    // message.innerHTML = "";
-    // score_title.innerHTML = "Score : ";
-    // score_val.innerHTML = "0";
-    //call a function to play
-  
 
+
+// let background = document.querySelector(".background").getBoundingClientRect();
+//console.log("background", background)
+
+
+
+
+
+   
+
+let lastTime
+const updateLoop= (time) => {
+    if(lastTime == null){
+        lastTime = true
+        window.requestAnimationFrame(updateLoop)
+        return
+    }
+
+    if (lostGame())  return handleLose()
+
+    const delta = time - lastTime
+    updateBird(delta)
+    lastTime = time
+    window.requestAnimationFrame(updateLoop)
+
+}
+
+function lostGame(){
+    const birdRect  = getBirdRect()
+
+    const outsideWorld = birdRect.top < 0 || birdRect.bottom > window.innerHeight
+    return outsideWorld
+}
+
+const handleStart = () => {
+    message.classList.add("hide");
+    setUpBird()
+    lastTime  = null
+    window.requestAnimationFrame(updateLoop)
+    }
+    
+    document.addEventListener("keypress", handleStart, { once: true })
+    
+const handleLose = () => {
+    setTimeout(() => {
+    message.classList.remove("hide");
+    message.classList.add("hide");
+    subtitle.textContent = "o pipes"
+    document.addEventListener("keypress", handleStart, {once: true})
+}, 100)
+
+}
