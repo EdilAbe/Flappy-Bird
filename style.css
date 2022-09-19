@@ -1,0 +1,53 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+    overflow: hidden;
+	font-family:sans-serif;
+}
+.background {
+	height: 100vh;
+	width: 100vw;
+	background: url('images/background-img.png');
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.bird {
+	height: 100px;
+	width: 130px;
+	position: fixed;
+	top: 40vh;
+	left: 30vw;
+}
+
+.message {
+	position: absolute;
+	color: black;
+	top: 30%;
+	left: 50%;
+	font-size: 4em;
+	text-align: center;
+}
+.messageStyle{
+	background: white;
+	padding: 30px;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	border-radius: 5%;
+}
+.score {
+	position: fixed;
+	height: 10vh;
+	font-size: 10vh;
+	font-weight: 100;
+	color: white;
+	top: 0;
+	left: 0;
+	margin: 10px;
+	font-family: sans-serif;
+}
+.score_val {
+	color: gold;
+	font-weight: bold;
+}
