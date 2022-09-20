@@ -11,7 +11,7 @@
 	background: url('images/background-img.png');
     }
 .bird {
-    --bird-top: 70px;
+    --bird-top: -1000px;
     --bird-size: 80px;
     z-index: 10;
 	height: var(--bird-size);
@@ -56,4 +56,11 @@
 .score_val {
 	color: gold;
 	font-weight: bold;
+}
+
+.pipe{
+	position: absolute;
+	width: calc(var(--pipe-width)*1px);
+	left: calc(var(--pipe-width)*1px);
+
 }
