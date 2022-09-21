@@ -5,6 +5,7 @@ const pipe_speed = 0.75
 let timeElapsed
 let pipes = []
 let pipeCount
+let sound_point = new Audio("./Sound/sounds effect_point.mp3");
 
 
 export function setupPipes(){
@@ -18,12 +19,25 @@ export function setupPipes(){
 
 console.log("pipes", pipes)
 
-
-
 export function getPipeCount(){
-    return pipeCount
+    return pipeCount 
+
 }
 
+export function levelTwo(){
+    
+    hole_height = 240
+    pipe_interval = 850
+    pipe_speed = 0.77
+
+}
+
+export function levelThree(){
+    hole_height = 230
+    pipe_interval = 800
+    pipe_speed = 0.8
+    
+}
 
 export function getPipeRects(){
     //flat map get the array of arrays and covert it to one dimensional array 
@@ -79,11 +93,13 @@ export function updatePipes(delta){
     pipes.forEach(pipe => { 
         if(pipe.left + pipe_width < 0){
             pipeCount ++
+            sound_point.play();
             return pipe.remove()
         }
         pipe.left = pipe.left - delta * pipe_speed
         console.log("pipe left", pipe.left)
     })
+
 }
 
 

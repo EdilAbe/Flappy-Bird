@@ -48,7 +48,7 @@
 	color: black;
 	font-size: 1em;
     flex-direction: column;
-	margin-top: 2em;
+	margin-bottom: 3em;
 }
 .hide{
     display: none;
