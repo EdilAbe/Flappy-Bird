@@ -1,10 +1,10 @@
-const hole_height = 200
-const pipe_width = 120
-const pipe_interval = 1500
+const hole_height = 250
+const pipe_width = 100
+const pipe_interval = 900
 const pipe_speed = 0.75
-let pipeCount 
 let timeElapsed
 let pipes = []
+let pipeCount
 
 
 export function setupPipes(){
@@ -16,14 +16,28 @@ export function setupPipes(){
 
 }
 
-export function pipeCount(){
+console.log("pipes", pipes)
+
+
+
+export function getPipeCount(){
     return pipeCount
 }
 
+
+export function getPipeRects(){
+    //flat map get the array of arrays and covert it to one dimensional array 
+    return pipes.flatMap(pipe => pipe.rects())
+}
+
 function createPipe(){
-    const pipeEl = document.querySelector(".pipe")
-    const topEl = document.querySelector(".top")
-    pipeEl.style.setProperty("--hole-top", randomNumberBetween(hole_height * 1.5, window.innerHeight -hole_height*0.5))
+    const pipeEl = document.createElement("div")
+    const topEl = createPipeSegment("top")
+  const bottomEl = createPipeSegment("bottom")
+    pipeEl.append(topEl)
+    pipeEl.append(bottomEl)
+    pipeEl.classList.add("pipe")
+    pipeEl.style.setProperty("--hole-top", randomNumberBetween(hole_height * 1.5, window.innerHeight - hole_height*0.5))
     
     const pipe= {
                 get left(){
@@ -36,7 +50,7 @@ function createPipe(){
                 },
                 remove(){
                     pipes = pipes.filter(p => p !== pipe)
-                    pipeEl.remove
+                    pipeEl.remove()
                         
                 },
                 rects(){
@@ -49,5 +63,37 @@ function createPipe(){
     pipe.left = window.innerWidth
     document.body.append(pipeEl)
     pipes.push(pipe)
+    console.log( topEl.getBoundingClientRect())
+}
 
+export function updatePipes(delta){
+    timeElapsed += delta 
+
+
+    if(timeElapsed > pipe_interval){
+        timeElapsed -= pipe_interval
+        createPipe()
+    }
+
+
+    pipes.forEach(pipe => { 
+        if(pipe.left + pipe_width < 0){
+            pipeCount ++
+            return pipe.remove()
+        }
+        pipe.left = pipe.left - delta * pipe_speed
+        console.log("pipe left", pipe.left)
+    })
+}
+
+
+function createPipeSegment(position){
+    const segment = document.createElement("div")
+    segment.classList.add("segment", position)
+    return segment
+}
+
+
+function randomNumberBetween(min, max){
+    return (Math.random()* (max-min + 1) + min)
 }

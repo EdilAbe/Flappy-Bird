@@ -12,13 +12,15 @@
     }
 .bird {
     --bird-top: -1000px;
-    --bird-size: 80px;
+    --bird-size: 100px;
     z-index: 10;
 	height: var(--bird-size);
 	width: var(--bird-size);
 	position: absolute;
 	top: calc(var(--bird-top)* 1px);
-	left: 30vw;
+	left: var(--bird-size);
+	/* background-color: hsl(50, 75%, 50%); */
+	/* border-radius: 50%; */
 }
 
 .message {
@@ -36,16 +38,27 @@
 
 
 #subtitle{
-
+	z-index: 10;
+	position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    inset: 0;
+    margin: 0;
+	color: black;
+	font-size: 1em;
+    flex-direction: column;
+	margin-top: 2em;
 }
 .hide{
     display: none;
 }
 
 .score {
+	z-index: 10;
 	position: fixed;
 	height: 10vh;
-	font-size: 10vh;
+	font-size: 5vh;
 	font-weight: 100;
 	color: white;
 	top: 0;
@@ -60,7 +73,26 @@
 
 .pipe{
 	position: absolute;
+	top: 0;
+	bottom: 0;
 	width: calc(var(--pipe-width)*1px);
-	left: calc(var(--pipe-width)*1px);
+	left: calc(var(--pipe-left)*1px);
 
+}
+
+.pipe  > .segment{
+	position: absolute;
+	width: 100%;
+	background-color: rgb(58, 165, 58);
+}
+
+.pipe > .top{
+	top: 0;
+	bottom: calc(var(--hole-top)* 1px)
+}
+
+
+.pipe > .bottom{
+	bottom: 0;
+	top: calc(100vh - (var(--hole-top) * 1px) + calc(var(--hole-height) * 1px))
 }

@@ -1,4 +1,4 @@
-const bird_speed = 0.7
+const bird_speed = 0.5
 const bird = document.querySelector(".bird")
 //jump_duration is how long our jump is going to last
 const jump_duration = 125
@@ -18,15 +18,17 @@ export function updateBird(delta){
         //moves bird down
         setTop(getTop() + bird_speed*delta)
     }
-    console.log("timeElapsed", timeElapsed)
-    console.log("jump duration", jump_duration)
+    // console.log("timeElapsed", timeElapsed)
+    // console.log("jump duration", jump_duration)
     timeElapsed += delta
 }
 
 //this gives us the top, right, left and bottom of our bird so we can use those position to determine if the bird has gone off of our screen
 export function getBirdRect(){
-    return bird.getBoundingClientRect
+    return bird.getBoundingClientRect()
 }
+console.log("bird rect", bird.getBoundingClientRect() )
+
 function setTop(top){
     bird.style.setProperty("--bird-top", top)
 }
