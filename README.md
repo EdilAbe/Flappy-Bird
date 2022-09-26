@@ -27,6 +27,21 @@ A way to reset the board and play again
 CSS to give your game a personal and fun style
 Responsive mobile design
 
+## Tech stack
+
+HTML
+
+CSS
+
+JavaScript
+
+## How to play 
+
+Start the game
+
+Stay in the middle of screen until the first set of pipes appears
+
+Stay in the middle of the pipes
 
 ## Acknowledgements :
 
