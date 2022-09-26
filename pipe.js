@@ -1,12 +1,15 @@
-const hole_height = 250
-const pipe_width = 100
-const pipe_interval = 900
-const pipe_speed = 0.75
+
+let hole_height = 300
+let  pipe_width = 100
+let pipe_interval = 1500
+let pipe_speed = 0.5
 let timeElapsed
 let pipes = []
 let pipeCount
 let sound_point = new Audio("./Sound/sounds effect_point.mp3");
+let score_val = document.querySelector(".score_val");
 
+export let gameLevel = 0
 
 export function setupPipes(){
     document.documentElement.style.setProperty("--pipe-width",pipe_width)
@@ -24,21 +27,6 @@ export function getPipeCount(){
 
 }
 
-export function levelTwo(){
-    
-    hole_height = 240
-    pipe_interval = 850
-    pipe_speed = 0.77
-
-}
-
-export function levelThree(){
-    hole_height = 230
-    pipe_interval = 800
-    pipe_speed = 0.8
-    
-}
-
 export function getPipeRects(){
     //flat map get the array of arrays and covert it to one dimensional array 
     return pipes.flatMap(pipe => pipe.rects())
@@ -51,7 +39,10 @@ function createPipe(){
     pipeEl.append(topEl)
     pipeEl.append(bottomEl)
     pipeEl.classList.add("pipe")
-    pipeEl.style.setProperty("--hole-top", randomNumberBetween(hole_height * 1.5, window.innerHeight - hole_height*0.5))
+    pipeEl.style.setProperty("--hole-top", randomNumberBetween(250* 1.5, window.innerHeight - 250*0.5))
+    console.log("updated height", hole_height)
+
+
     
     const pipe= {
                 get left(){
@@ -93,13 +84,18 @@ export function updatePipes(delta){
     pipes.forEach(pipe => { 
         if(pipe.left + pipe_width < 0){
             pipeCount ++
+            gameLevel ++
+            console.log("game level", gameLevel)
             sound_point.play();
+            score_val.innerHTML = `${getPipeCount()} Pipes`
+
             return pipe.remove()
         }
         pipe.left = pipe.left - delta * pipe_speed
         console.log("pipe left", pipe.left)
     })
 
+   
 }
 
 

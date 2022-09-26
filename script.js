@@ -1,5 +1,5 @@
 import {updateBird, setUpBird, getBirdRect} from "./bird.js"
-import {updatePipes, setupPipes, getPipeCount, getPipeRects, levelTwo, levelThree} from "./pipe.js"
+import {updatePipes, setupPipes, getPipeCount, getPipeRects} from "./pipe.js"
 
 
 let score_title = document.querySelector(".score_title");
@@ -34,37 +34,6 @@ function isCollision(rect1, rect2){
     )
 }
 
-const winOrLose = () =>{
-    if(getPipeCount() > 2){
-        setTimeout(() => {
-            sound_point.play();
-            message.classList.remove("hide");
-            subtitle.classList.remove("hide");
-            score_val.innerHTML = `${getPipeCount()} Pipes`
-            subtitle.textContent = ` Congratulations you have completed the first round. Round 2`
-            document.addEventListener("keypress", handleStart, {once: true})
-        }, 1000)
-        lastTime = time
-    window.requestAnimationFrame(updateLoop)
-    levelTwo()
-    } else if(getPipeCount() > 5) {
-        setTimeout(() => {
-            sound_point.play();
-            message.classList.remove("hide");
-            subtitle.classList.remove("hide");
-            score_val.innerHTML = `${getPipeCount()} Pipes`
-            subtitle.textContent = ` Congratulations you have completed the second round. Round 3`
-            document.addEventListener("keypress", handleStart, {once: true})
-        }, 1000)
-        lastTime = time
-    window.requestAnimationFrame(updateLoop)
-    levelThree()
-} else {
- console.log("keep playing")
-}
-
-}
-
 
 const handleStart = () => {
     message.classList.add("hide");
@@ -75,8 +44,10 @@ const handleStart = () => {
     window.requestAnimationFrame(updateLoop) // call requestAnimationFrame and pass into it animation function
     score_title.innerHTML = 'Score : ';
     score_val.innerHTML = '0';
+
     }
-    
+   
+    // starts the game
     document.addEventListener("keypress", handleStart, { once: true })
     
 const handleLose = () => {
@@ -88,28 +59,46 @@ const handleLose = () => {
     subtitle.textContent = `${getPipeCount()} Pipes`
     document.addEventListener("keypress", handleStart, {once: true})
 }, 100)
-
 }
 
-const updateLoop= (time) => {
+const handleWin = () => {
+    setTimeout(() => {
+    message.classList.remove("hide");
+    subtitle.classList.remove("hide");
+    score_val.innerHTML = `${getPipeCount()} Pipes`
+    subtitle.textContent = `You win!`
+    document.addEventListener("keypress", handleStart, {once: true})
+}, 300)
+}
+
+
+
+
+const updateLoop = (time) => {
     if(lastTime == null){
         lastTime = time
         window.requestAnimationFrame(updateLoop)
         return 
     }
 
+
+
       //DELTA is the difference between different animation frames
       const delta = time - lastTime
+      console.log("time", time)
+      console.log("lastime", lastTime)
+      console.log("delta", delta)
       updateBird(delta)
       updatePipes(delta)
-      winOrLose()
 
-    score_val.innerHTML = `${getPipeCount()} Pipes`
+
+    // score_val.innerHTML = `${gameLevel} Pipes`
 
     //   console.log("delta", delta)
     //   console.log("last time",lastTime)
     //   console.log("time", time)
         console.log("pipe count", getPipeCount())
+    if (getPipeCount()===5) return handleWin()
     if (lostGame()) return handleLose()
   
     lastTime = time
@@ -117,3 +106,5 @@ const updateLoop= (time) => {
     window.requestAnimationFrame(updateLoop)
 
 }
+
+
